@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Полночный Курьер — служба доставки заклинаний</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --ink-900: #0E1226;
+            --ink-850: #121734;
+            --ink-800: #161B34;
+            --ink-700: #232A4D;
+            --ink-600: #323C6B;
+            --gold: #E8C06A;
+            --gold-soft: #F0D69A;
+            --aurora: #7FD8C4;
+            --parchment: #EDE6D3;
+            --muted: #9AA3C4;
+            --danger: #E58A8A;
+            --radius: 18px;
+            --radius-sm: 12px;
+            --maxw: 1160px;
+            --shadow: 0 24px 60px -28px rgba(0, 0, 0, .75);
+            --ring: 0 0 0 3px rgba(232, 192, 106, .35);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background:
+                radial-gradient(1200px 600px at 78% -8%, rgba(127, 216, 196, .10), transparent 60%),
+                radial-gradient(900px 520px at 10% 0%, rgba(232, 192, 106, .10), transparent 55%),
+                var(--ink-900);
+            color: var(--parchment);
+            font-family: "Space Grotesk", system-ui, sans-serif;
+            font-size: 17px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--gold);
+            color: var(--ink-900)
+        }
+
+        .wrap {
+            max-width: var(--maxw);
+            margin: 0 auto;
+            padding: 0 28px
+        }
+
+        .section {
+            padding: 104px 0
+        }
+
+        .eyebrow {
+            font-family: "Space Mono", monospace;
+            font-size: 12.5px;
+            letter-spacing: .28em;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 26px;
+            height: 1px;
+            background: var(--gold);
+            opacity: .7
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: "Fraunces", serif;
+            font-weight: 500;
+            line-height: 1.05;
+            letter-spacing: -.01em
+        }
+
+        .muted {
+            color: var(--muted)
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        /* ---------- NAV ---------- */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: linear-gradient(to bottom, rgba(14, 18, 38, .9), rgba(14, 18, 38, .55));
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-family: "Fraunces", serif;
+            font-size: 20px;
+            letter-spacing: .01em
+        }
+
+        .brand .seal {
+            width: 30px;
+            height: 30px;
+            flex: 0 0 auto
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center
+        }
+
+        .nav-links a {
+            font-size: 14.5px;
+            color: var(--muted);
+            transition: color .2s
+        }
+
+        .nav-links a:hover {
+            color: var(--parchment)
+        }
+
+        .nav-cta {
+            font-family: "Space Grotesk";
+            font-size: 14px;
+            font-weight: 600;
+            padding: 10px 18px;
+            border-radius: 999px;
+            color: var(--ink-900);
+            background: var(--gold);
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 26px -10px rgba(232, 192, 106, .7)
+        }
+
+        @media(max-width:760px) {
+            .nav-links a:not(.nav-cta) {
+                display: none
+            }
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            position: relative;
+            padding: 88px 0 96px
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            gap: 56px;
+            align-items: center
+        }
+
+        .hero h1 {
+            font-size: clamp(44px, 6.4vw, 84px);
+            letter-spacing: -.02em
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold)
+        }
+
+        .hero .lede {
+            margin-top: 26px;
+            font-size: 19px;
+            max-width: 34ch;
+            color: #D7D3C4
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 14px;
+            margin-top: 38px;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            font-family: "Space Grotesk";
+            font-weight: 600;
+            font-size: 15.5px;
+            padding: 15px 26px;
+            border-radius: 999px;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: transform .2s, box-shadow .2s, background .2s, border-color .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--ink-900)
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 34px -14px rgba(232, 192, 106, .75)
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--parchment);
+            border-color: rgba(255, 255, 255, .16)
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--gold);
+            color: var(--gold-soft)
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 28px;
+            margin-top: 44px;
+            flex-wrap: wrap
+        }
+
+        .hero-meta .stat .n {
+            font-family: "Fraunces", serif;
+            font-size: 30px;
+            color: var(--parchment)
+        }
+
+        .hero-meta .stat .l {
+            font-family: "Space Mono", monospace;
+            font-size: 11.5px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+
+        /* hero art */
+        .hero-art {
+            position: relative;
+            height: 440px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .hero-art .halo {
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(232, 192, 106, .22), rgba(127, 216, 196, .06) 55%, transparent 72%);
+            filter: blur(6px);
+        }
+
+        .parcel {
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .55))
+        }
+
+        .stars {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--parchment);
+            opacity: .0;
+            animation: twinkle 4s ease-in-out infinite
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: .15;
+                transform: scale(.7)
+            }
+
+            50% {
+                opacity: .9;
+                transform: scale(1)
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-14px)
+            }
+        }
+
+        .parcel-float {
+            animation: float 7s ease-in-out infinite
+        }
+
+        @media(max-width:900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 20px
+            }
+
+            .hero-art {
+                height: 320px;
+                order: -1
+            }
+
+            .hero .lede {
+                max-width: none
+            }
+        }
+
+        /* ---------- CATALOG ---------- */
+        .head-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 44px
+        }
+
+        .head-row h2 {
+            font-size: clamp(32px, 4vw, 46px)
+        }
+
+        .head-row p {
+            max-width: 42ch;
+            color: var(--muted);
+            margin-top: 14px
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px
+        }
+
+        @media(max-width:900px) {
+            .grid-cards {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:600px) {
+            .grid-cards {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .spell {
+            position: relative;
+            background: linear-gradient(180deg, var(--ink-800), var(--ink-850));
+            border: 1px solid rgba(255, 255, 255, .07);
+            border-radius: var(--radius);
+            padding: 26px 24px 24px;
+            transition: transform .25s, border-color .25s, box-shadow .25s;
+            display: flex;
+            flex-direction: column;
+            min-height: 236px;
+        }
+
+        .spell:hover {
+            transform: translateY(-5px);
+            border-color: rgba(232, 192, 106, .4);
+            box-shadow: var(--shadow)
+        }
+
+        .spell .glyph {
+            font-size: 26px;
+            line-height: 1;
+            margin-bottom: 16px
+        }
+
+        .spell h3 {
+            font-size: 22px;
+            margin-bottom: 8px
+        }
+
+        .spell .situ {
+            color: var(--muted);
+            font-size: 14.5px;
+            flex-grow: 1
+        }
+
+        .spell .effect {
+            margin-top: 14px;
+            font-size: 14px;
+            color: #CFCBBC;
+            border-top: 1px dashed rgba(255, 255, 255, .12);
+            padding-top: 14px
+        }
+
+        .spell-foot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px
+        }
+
+        .tier {
+            font-family: "Space Mono", monospace;
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            padding: 5px 10px;
+            border-radius: 999px;
+            border: 1px solid
+        }
+
+        .tier.simple {
+            color: var(--aurora);
+            border-color: rgba(127, 216, 196, .4)
+        }
+
+        .tier.tricky {
+            color: var(--gold);
+            border-color: rgba(232, 192, 106, .45)
+        }
+
+        .tier.rare {
+            color: var(--danger);
+            border-color: rgba(229, 138, 138, .45)
+        }
+
+        .eta {
+            font-family: "Space Mono", monospace;
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        /* ---------- PROCESS ---------- */
+        .process {
+            background: linear-gradient(180deg, transparent, rgba(35, 42, 77, .28), transparent)
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-top: 8px
+        }
+
+        @media(max-width:820px) {
+            .steps {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .step {
+            padding: 28px 24px;
+            border-radius: var(--radius);
+            background: rgba(22, 27, 52, .5);
+            border: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        .step .num {
+            font-family: "Space Mono", monospace;
+            color: var(--gold);
+            font-size: 13px;
+            letter-spacing: .2em
+        }
+
+        .step h3 {
+            font-size: 22px;
+            margin: 14px 0 8px
+        }
+
+        .step p {
+            color: var(--muted);
+            font-size: 15px
+        }
+
+        .tiers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-top: 56px
+        }
+
+        @media(max-width:820px) {
+            .tiers {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .tier-card {
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: var(--radius);
+            padding: 26px 24px;
+            background: var(--ink-800);
+            position: relative
+        }
+
+        .tier-card.featured {
+            border-color: rgba(232, 192, 106, .55);
+            background: linear-gradient(180deg, rgba(232, 192, 106, .09), var(--ink-800))
+        }
+
+        .tier-card .badge {
+            position: absolute;
+            top: -11px;
+            right: 20px;
+            font-family: "Space Mono", monospace;
+            font-size: 10.5px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            background: var(--gold);
+            color: var(--ink-900);
+            padding: 4px 10px;
+            border-radius: 999px
+        }
+
+        .tier-card .name {
+            font-family: "Fraunces", serif;
+            font-size: 24px
+        }
+
+        .tier-card .price {
+            font-family: "Space Mono", monospace;
+            font-size: 14px;
+            color: var(--gold);
+            margin: 6px 0 14px
+        }
+
+        .tier-card .desc {
+            color: var(--muted);
+            font-size: 14.5px
+        }
+
+        /* ---------- DISPATCH DESK (interactive) ---------- */
+        .desk {
+            background: radial-gradient(700px 380px at 80% 10%, rgba(127, 216, 196, .08), transparent 60%)
+        }
+
+        .desk-shell {
+            background: linear-gradient(180deg, var(--ink-800), var(--ink-850));
+            border: 1px solid rgba(255, 255, 255, .09);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .desk-grid {
+            display: grid;
+            grid-template-columns: 1.15fr .85fr
+        }
+
+        @media(max-width:900px) {
+            .desk-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .desk-form {
+            padding: 38px 36px
+        }
+
+        @media(max-width:520px) {
+            .desk-form {
+                padding: 28px 22px
+            }
+        }
+
+        .field {
+            margin-bottom: 26px
+        }
+
+        .field>label {
+            display: block;
+            font-family: "Space Mono", monospace;
+            font-size: 11.5px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px
+        }
+
+        .chip {
+            font-size: 14px;
+            padding: 10px 15px;
+            border-radius: 999px;
+            cursor: pointer;
+            background: var(--ink-700);
+            border: 1px solid rgba(255, 255, 255, .08);
+            color: var(--parchment);
+            transition: all .18s;
+        }
+
+        .chip:hover {
+            border-color: rgba(232, 192, 106, .5)
+        }
+
+        .chip[aria-pressed="true"] {
+            background: var(--gold);
+            color: var(--ink-900);
+            border-color: var(--gold);
+            font-weight: 600
+        }
+
+        .rec {
+            margin-top: 14px;
+            font-size: 14px;
+            color: var(--aurora);
+            min-height: 22px;
+            font-family: "Space Mono", monospace
+        }
+
+        .urgency {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px
+        }
+
+        .urg {
+            text-align: left;
+            cursor: pointer;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            background: var(--ink-700);
+            border: 1px solid rgba(255, 255, 255, .08);
+            transition: all .18s;
+        }
+
+        .urg:hover {
+            border-color: rgba(232, 192, 106, .5)
+        }
+
+        .urg[aria-pressed="true"] {
+            border-color: var(--gold);
+            background: linear-gradient(180deg, rgba(232, 192, 106, .14), var(--ink-700))
+        }
+
+        .urg .ut {
+            font-size: 14px;
+            font-weight: 600
+        }
+
+        .urg .up {
+            font-family: "Space Mono", monospace;
+            font-size: 12px;
+            color: var(--gold);
+            margin-top: 4px
+        }
+
+        .urg .ue {
+            font-family: "Space Mono", monospace;
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .desk-form input[type=text] {
+            width: 100%;
+            padding: 13px 15px;
+            border-radius: var(--radius-sm);
+            background: var(--ink-900);
+            border: 1px solid rgba(255, 255, 255, .1);
+            color: var(--parchment);
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        .desk-form input::placeholder {
+            color: #5f688c
+        }
+
+        .desk-form input:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: var(--ring)
+        }
+
+        .send {
+            width: 100%;
+            justify-content: center;
+            margin-top: 6px
+        }
+
+        /* receipt / tracking card */
+        .receipt {
+            background:
+                repeating-linear-gradient(180deg, transparent 0 26px, rgba(255, 255, 255, .02) 26px 27px),
+                var(--ink-900);
+            border-left: 1px solid rgba(255, 255, 255, .09);
+            padding: 38px 34px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media(max-width:900px) {
+            .receipt {
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, .09)
+            }
+        }
+
+        .receipt .tag {
+            font-family: "Space Mono", monospace;
+            font-size: 11px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+
+        .receipt .seal-lg {
+            align-self: center;
+            margin: 10px 0 4px
+        }
+
+        .receipt h3 {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 4px
+        }
+
+        .receipt .code {
+            text-align: center;
+            font-family: "Space Mono", monospace;
+            font-size: 13px;
+            color: var(--gold);
+            letter-spacing: .12em
+        }
+
+        .rline {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding: 11px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, .12)
+        }
+
+        .rline .k {
+            color: var(--muted)
+        }
+
+        .rline .v {
+            color: var(--parchment);
+            text-align: right;
+            max-width: 60%
+        }
+
+        .track {
+            margin-top: 22px
+        }
+
+        .track .step-t {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 9px 0;
+            opacity: .35;
+            transition: opacity .5s
+        }
+
+        .track .step-t.on {
+            opacity: 1
+        }
+
+        .track .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            margin-top: 6px;
+            background: var(--ink-600);
+            flex: 0 0 auto;
+            position: relative
+        }
+
+        .track .step-t.on .dot {
+            background: var(--aurora);
+            box-shadow: 0 0 0 4px rgba(127, 216, 196, .18)
+        }
+
+        .track .tt {
+            font-size: 14.5px
+        }
+
+        .track .td {
+            font-family: "Space Mono", monospace;
+            font-size: 11.5px;
+            color: var(--muted)
+        }
+
+        .receipt-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+            gap: 14px;
+            color: var(--muted)
+        }
+
+        .receipt-empty .em-glyph {
+            font-size: 40px;
+            opacity: .7
+        }
+
+        .hidden {
+            display: none
+        }
+
+        /* ---------- WORKLOG ---------- */
+        .worklog {
+            background: linear-gradient(180deg, transparent, rgba(35, 42, 77, .3))
+        }
+
+        .log-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 12px
+        }
+
+        @media(max-width:760px) {
+            .log-grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .log {
+            display: flex;
+            gap: 16px;
+            padding: 20px 22px;
+            border-radius: var(--radius-sm);
+            background: rgba(22, 27, 52, .55);
+            border: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        .log .lc {
+            font-family: "Space Mono", monospace;
+            color: var(--gold);
+            font-size: 13px;
+            flex: 0 0 auto
+        }
+
+        .log .lt {
+            font-size: 14.5px;
+            color: #D3CFC0
+        }
+
+        .log .lt b {
+            color: var(--parchment);
+            font-weight: 600;
+            font-family: "Space Grotesk"
+        }
+
+        .stackline {
+            margin-top: 34px;
+            font-family: "Space Mono", monospace;
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 2
+        }
+
+        .stackline b {
+            color: var(--gold)
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, .07);
+            padding: 60px 0 44px;
+            text-align: center
+        }
+
+        footer .big {
+            font-family: "Fraunces", serif;
+            font-size: clamp(30px, 4.4vw, 52px);
+            margin-bottom: 18px
+        }
+
+        footer .big em {
+            font-style: italic;
+            color: var(--gold)
+        }
+
+        .foot-meta {
+            margin-top: 34px;
+            font-family: "Space Mono", monospace;
+            font-size: 12px;
+            color: var(--muted);
+            letter-spacing: .06em
+        }
+
+        :focus-visible {
+            outline: none;
+            box-shadow: var(--ring);
+            border-radius: 8px
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                scroll-behavior: auto !important;
+                transition: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============ NAV ============ -->
+    <header class="nav">
+        <div class="wrap nav-inner">
+            <a class="brand" href="#top">
+                <svg class="seal" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="20" cy="20" r="18" fill="#E8C06A" />
+                    <circle cx="20" cy="20" r="18" stroke="#0E1226" stroke-opacity=".2" stroke-width="1.5" />
+                    <path d="M20 9l2.6 6.1 6.6.5-5 4.3 1.6 6.4L20 29l-6.4 2.8 1.6-6.4-5-4.3 6.6-.5L20 9z" fill="#0E1226"
+                        fill-opacity=".82" />
+                </svg>
+                Полночный&nbsp;Курьер
+            </a>
+            <nav class="nav-links">
+                <a href="#catalog">Каталог</a>
+                <a href="#how">Как доставляем</a>
+                <a href="#desk">Оформить</a>
+                <a class="nav-cta" href="#desk">Вызвать сову</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="top">
+
+        <!-- ============ HERO ============ -->
+        <section class="hero">
+            <div class="wrap hero-grid">
+                <div class="hero-copy">
+                    <span class="eyebrow">Доставка заклинаний · с 1723 года</span>
+                    <h1>Нужное заклинание — <em>до первой звезды</em>.</h1>
+                    <p class="lede">Выбираете заклинание, курьер-сова снимает его с полки архива и приносит к порогу.
+                        Каждая посылка — с дымящейся печатью и кодом отслеживания.</p>
+                    <div class="hero-cta">
+                        <a class="btn btn-primary" href="#desk">Подобрать заклинание →</a>
+                        <a class="btn btn-ghost" href="#how">Как это работает</a>
+                    </div>
+                    <div class="hero-meta">
+                        <div class="stat">
+                            <div class="n">7&nbsp;мин</div>
+                            <div class="l">до вылета совы</div>
+                        </div>
+                        <div class="stat">
+                            <div class="n">243</div>
+                            <div class="l">заклинания на полке</div>
+                        </div>
+                        <div class="stat">
+                            <div class="n">99.4%</div>
+                            <div class="l">долетают с первого раза</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-art" aria-hidden="true">
+                    <div class="halo"></div>
+                    <div class="stars" id="stars"></div>
+                    <img src="hero.png" alt="Сова несёт запечатанное заклинание" class="parcel parcel-float"
+                        style="width:300px;height:auto;border-radius:20px" />
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ CATALOG ============ -->
+        <section class="section" id="catalog">
+            <div class="wrap">
+                <div class="head-row">
+                    <div>
+                        <span class="eyebrow">Полка архива</span>
+                        <h2 style="margin-top:16px">Что сегодня в доставке</h2>
+                    </div>
+                    <p>Шесть заклинаний, готовых к отправке прямо сейчас. Класс сложности определяет, как далеко полетит
+                        сова и сколько займёт путь.</p>
+                </div>
+
+                <div class="grid-cards" id="catalogGrid">
+                    <!-- cards injected by JS from the same data the form uses -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PROCESS ============ -->
+        <section class="section process" id="how">
+            <div class="wrap">
+                <div class="head-row">
+                    <div>
+                        <span class="eyebrow">Маршрут посылки</span>
+                        <h2 style="margin-top:16px">Как долетает заклинание</h2>
+                    </div>
+                    <p>Три шага от вашего запроса до дымящейся печати на пороге. Никакой магической бюрократии.</p>
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="num">01 / ЗАПРОС</div>
+                        <h3>Вы называете беду</h3>
+                        <p>Описываете ситуацию — от потерянных ключей до неспокойного дракона. Курьерская сова подбирает
+                            подходящее заклинание с полки.</p>
+                    </div>
+                    <div class="step">
+                        <div class="num">02 / СБОРКА</div>
+                        <h3>Заклинание пакуют</h3>
+                        <p>Мастер запечатывает заклинание горячим воском и присваивает код отслеживания. С этого момента
+                            вы видите, где посылка.</p>
+                    </div>
+                    <div class="step">
+                        <div class="num">03 / ПОЛЁТ</div>
+                        <h3>Сова несёт к порогу</h3>
+                        <p>Выбранный класс срочности определяет скорость. Доставленное заклинание активируется, как
+                            только вы сломаете печать.</p>
+                    </div>
+                </div>
+
+                <div class="tiers" id="tiersRow">
+                    <div class="tier-card">
+                        <div class="name">Обычная сова</div>
+                        <div class="price">+0 лунных монет</div>
+                        <div class="desc">Долетит к рассвету следующего дня. Спокойно и без спешки — для несрочных
+                            чудес.</div>
+                    </div>
+                    <div class="tier-card featured">
+                        <div class="badge">Выбор дома</div>
+                        <div class="name">Спешная сова</div>
+                        <div class="price">+3 лунные монеты</div>
+                        <div class="desc">В пути не дольше трёх часов. Летит поверх облаков, срезая путь через
+                            созвездия.</div>
+                    </div>
+                    <div class="tier-card">
+                        <div class="name">До первой звезды</div>
+                        <div class="price">+7 лунных монет</div>
+                        <div class="desc">Мгновенная переброска через лунный портал. Для бед, которые не ждут до утра.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ DISPATCH DESK (interactive) ============ -->
+        <section class="section desk" id="desk">
+            <div class="wrap">
+                <div class="head-row">
+                    <div>
+                        <span class="eyebrow">Стойка отправки</span>
+                        <h2 style="margin-top:16px">Оформить доставку</h2>
+                    </div>
+                    <p>Расскажите, что случилось — мы подберём заклинание, посчитаем срочность и выпишем накладную с
+                        кодом отслеживания.</p>
+                </div>
+
+                <div class="desk-shell">
+                    <div class="desk-grid">
+                        <!-- form -->
+                        <div class="desk-form">
+                            <div class="field">
+                                <label>1 · Что у вас случилось?</label>
+                                <div class="chips" id="situChips" role="group" aria-label="Ситуация">
+                                    <button class="chip" data-spell="keys" aria-pressed="false">Потерял ключи</button>
+                                    <button class="chip" data-spell="dragon" aria-pressed="false">Дракон не
+                                        спит</button>
+                                    <button class="chip" data-spell="basil" aria-pressed="false">Нужен лунный
+                                        базилик</button>
+                                    <button class="chip" data-spell="muse" aria-pressed="false">Пропало
+                                        вдохновение</button>
+                                    <button class="chip" data-spell="pause" aria-pressed="false">Неловкая пауза</button>
+                                    <button class="chip" data-spell="alarm" aria-pressed="false">Не встаю по
+                                        будильнику</button>
+                                </div>
+                                <div class="rec" id="recLine">Выберите ситуацию — подскажем заклинание.</div>
+                            </div>
+
+                            <div class="field">
+                                <label>2 · Срочность доставки</label>
+                                <div class="urgency" id="urgRow" role="group" aria-label="Срочность">
+                                    <button class="urg" data-urg="calm" data-add="0" data-eta="к рассвету"
+                                        aria-pressed="true">
+                                        <div class="ut">Обычная</div>
+                                        <div class="up">+0 монет</div>
+                                        <div class="ue">к рассвету</div>
+                                    </button>
+                                    <button class="urg" data-urg="fast" data-add="3" data-eta="≤ 3 часов"
+                                        aria-pressed="false">
+                                        <div class="ut">Спешная</div>
+                                        <div class="up">+3 монеты</div>
+                                        <div class="ue">≤ 3 часов</div>
+                                    </button>
+                                    <button class="urg" data-urg="star" data-add="7" data-eta="мгновенно"
+                                        aria-pressed="false">
+                                        <div class="ut">До звезды</div>
+                                        <div class="up">+7 монет</div>
+                                        <div class="ue">мгновенно</div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label>3 · Куда нести</label>
+                                <input type="text" id="addr" placeholder="Улица Тумана, 12 — окно с геранью"
+                                    autocomplete="off" />
+                            </div>
+
+                            <button class="btn btn-primary send" id="sendBtn">Вызвать сову-курьера →</button>
+                        </div>
+
+                        <!-- receipt -->
+                        <div class="receipt" id="receipt">
+                            <div class="receipt-empty" id="receiptEmpty">
+                                <div class="em-glyph">🦉</div>
+                                <div>Здесь появится накладная<br />с кодом отслеживания.</div>
+                            </div>
+
+                            <div class="hidden" id="receiptFilled">
+                                <div class="tag">Накладная · Полночный Курьер</div>
+                                <svg class="seal-lg" width="52" height="52" viewBox="0 0 40 40"
+                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <circle cx="20" cy="20" r="18" fill="#E8C06A" />
+                                    <path
+                                        d="M20 9l2.6 6.1 6.6.5-5 4.3 1.6 6.4L20 29l-6.4 2.8 1.6-6.4-5-4.3 6.6-.5L20 9z"
+                                        fill="#0E1226" fill-opacity=".82" />
+                                </svg>
+                                <h3 id="rSpell">—</h3>
+                                <div class="code" id="rCode">—</div>
+
+                                <div style="margin-top:22px">
+                                    <div class="rline"><span class="k">Ситуация</span><span class="v"
+                                            id="rSitu">—</span></div>
+                                    <div class="rline"><span class="k">Класс сложности</span><span class="v"
+                                            id="rTier">—</span></div>
+                                    <div class="rline"><span class="k">Срочность</span><span class="v"
+                                            id="rUrg">—</span></div>
+                                    <div class="rline"><span class="k">Адрес</span><span class="v" id="rAddr">—</span>
+                                    </div>
+                                    <div class="rline"><span class="k">К оплате</span><span class="v"
+                                            id="rPrice">—</span></div>
+                                </div>
+
+                                <div class="track" id="track">
+                                    <div class="step-t" data-i="0">
+                                        <div class="dot"></div>
+                                        <div>
+                                            <div class="tt">Заказ принят</div>
+                                            <div class="td" id="t0">—</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-t" data-i="1">
+                                        <div class="dot"></div>
+                                        <div>
+                                            <div class="tt">Печать поставлена</div>
+                                            <div class="td">воск остывает…</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-t" data-i="2">
+                                        <div class="dot"></div>
+                                        <div>
+                                            <div class="tt">Сова в пути</div>
+                                            <div class="td" id="t2">курс на созвездие</div>
+                                        </div>
+                                    </div>
+                                    <div class="step-t" data-i="3">
+                                        <div class="dot"></div>
+                                        <div>
+                                            <div class="tt">Доставлено к порогу</div>
+                                            <div class="td" id="t3">сломайте печать</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ AI WORKLOG ============ -->
+        <section class="section worklog" id="worklog">
+            <div class="wrap">
+                <div class="head-row">
+                    <div>
+                        <span class="eyebrow">За кулисами</span>
+                        <h2 style="margin-top:16px">AI Worklog</h2>
+                    </div>
+                    <p>Как этот лендинг собирался: где помогал AI, что я решал сам и что доводил руками.</p>
+                </div>
+
+                <div class="log-grid">
+                    <div class="log">
+                        <div class="lc">01</div>
+                        <div class="lt"><b>Концепция.</b> Через Claude прогнал 5 метафор сервиса. Выбрал «курьер», а не
+                            «магазин»: он даёт повод для UI-состояний (заказ → в пути → доставлено).</div>
+                    </div>
+                    <div class="log">
+                        <div class="lc">02</div>
+                        <div class="lt"><b>Структура и копирайт.</b> Claude помог собрать каркас из 5 блоков и черновой
+                            текст карточек. Тон, названия заклинаний и микрокопию правил вручную.</div>
+                    </div>
+                    <div class="log">
+                        <div class="lc">03</div>
+                        <div class="lt"><b>Визуальное направление.</b> Ушёл от дефолтного «крем + сериф + терракота».
+                            Палитру полуночного индиго с золотом и авророй собрал сам, референсы гонял в Midjourney.
+                        </div>
+                    </div>
+                    <div class="log">
+                        <div class="lc">04</div>
+                        <div class="lt"><b>Вёрстка.</b> Базовый HTML/CSS сгенерирован с Claude, дальше руками:
+                            типографика Fraunces + Space Grotesk, ритм секций, hover-состояния карточек.</div>
+                    </div>
+                    <div class="log">
+                        <div class="lc">05</div>
+                        <div class="lt"><b>Сценарий заказа.</b> Интерактивную «стойку отправки» (подбор → срочность →
+                            накладная с трек-кодом) спроектировал сам, JS дописывал с AI и чистил вручную.</div>
+                    </div>
+                    <div class="log">
+                        <div class="lc">06</div>
+                        <div class="lt"><b>Проверка.</b> Прошёл сценарий на мобильном и десктопе, проверил фокус с
+                            клавиатуры, контраст текста и prefers-reduced-motion. Поправил переносы в hero.</div>
+                    </div>
+                </div>
+
+                <div class="stackline">
+                    <b>Стек:</b> HTML / CSS / vanilla JS · один файл · хостинг на Netlify Drop.<br />
+                    <b>AI-инструменты:</b> Claude (структура, копирайт, код), Midjourney (визуальные референсы).<br />
+                    <b>Харнез:</b> frontend-design skill · итеративные правки в одном файле.
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ FOOTER ============ -->
+        <footer>
+            <div class="wrap">
+                <div class="big">Где-то есть заклинание <em>и для вашей беды</em>.</div>
+                <a class="btn btn-primary" href="#desk">Оформить доставку →</a>
+                <div class="foot-meta">ПОЛНОЧНЫЙ КУРЬЕР · СЛУЖБА ДОСТАВКИ ЗАКЛИНАНИЙ · РАБОТАЕМ, ПОКА ГОРИТ ЛУНА</div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        // ---------- shared spell data (feeds catalog + form) ----------
+        const SPELLS = {
+            keys: { glyph: "🔑", name: "Найти потерянные ключи", situ: "Ключи снова растворились в квартире", effect: "Мягко подсвечивает пропажу тёплым золотым огоньком.", tier: "simple", tierLabel: "Простое", eta: "15 мин" },
+            dragon: { glyph: "🐉", name: "Успокоить дракона", situ: "Питомец-дракон не даёт соседям спать", effect: "Навевает сытый, довольный сон на любую чешуйчатую натуру.", tier: "rare", tierLabel: "Редкое", eta: "3 часа" },
+            basil: { glyph: "🌙", name: "Вырастить лунный базилик", situ: "Нужна редкая трава к полуночному ужину", effect: "Проращивает горшок серебристого базилика за одну ночь.", tier: "simple", tierLabel: "Простое", eta: "к полнолунию" },
+            muse: { glyph: "✒️", name: "Вернуть вдохновение", situ: "Смотришь на пустой лист третий час", effect: "Возвращает поток идей — аккуратно, без творческой лихорадки.", tier: "tricky", tierLabel: "Хитрое", eta: "к рассвету" },
+            pause: { glyph: "💬", name: "Отменить неловкую паузу", situ: "Встреча замерла в тягостной тишине", effect: "Растворяет неловкость и подсказывает первую живую фразу.", tier: "simple", tierLabel: "Простое", eta: "мгновенно" },
+            alarm: { glyph: "⏰", name: "Приручить будильник", situ: "Утренний будильник давно проигрывает", effect: "Будит бережно светом рассвета вместо резкого звона.", tier: "tricky", tierLabel: "Хитрое", eta: "к утру" },
+        };
+
+        // ---------- render catalog ----------
+        const grid = document.getElementById('catalogGrid');
+        Object.values(SPELLS).forEach(s => {
+            const el = document.createElement('article');
+            el.className = 'spell';
+            el.innerHTML = `
+      <div class="glyph">${s.glyph}</div>
+      <h3>${s.name}</h3>
+      <div class="situ">${s.situ}</div>
+      <div class="effect">${s.effect}</div>
+      <div class="spell-foot">
+        <span class="tier ${s.tier}">${s.tierLabel}</span>
+        <span class="eta">⏱ ${s.eta}</span>
+      </div>`;
+            grid.appendChild(el);
+        });
+
+        // ---------- hero stars ----------
+        const starBox = document.getElementById('stars');
+        for (let i = 0; i < 26; i++) {
+            const st = document.createElement('span');
+            st.className = 'star';
+            st.style.left = Math.random() * 100 + '%';
+            st.style.top = Math.random() * 100 + '%';
+            st.style.animationDelay = (Math.random() * 4) + 's';
+            starBox.appendChild(st);
+        }
+
+        // ---------- form state ----------
+        let chosenSpell = null;
+        let urgency = { key: 'calm', add: 0, eta: 'к рассвету', label: 'Обычная' };
+
+        const recLine = document.getElementById('recLine');
+        document.querySelectorAll('#situChips .chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                document.querySelectorAll('#situChips .chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+                chip.setAttribute('aria-pressed', 'true');
+                chosenSpell = chip.dataset.spell;
+                const s = SPELLS[chosenSpell];
+                recLine.textContent = `→ Подобрано: «${s.name}» · ${s.tierLabel} · ${s.eta}`;
+            });
+        });
+
+        document.querySelectorAll('#urgRow .urg').forEach(u => {
+            u.addEventListener('click', () => {
+                document.querySelectorAll('#urgRow .urg').forEach(x => x.setAttribute('aria-pressed', 'false'));
+                u.setAttribute('aria-pressed', 'true');
+                urgency = { key: u.dataset.urg, add: parseInt(u.dataset.add, 10), eta: u.dataset.eta, label: u.querySelector('.ut').textContent };
+            });
+        });
+
+        // ---------- pricing ----------
+        const BASE = { simple: 4, tricky: 8, rare: 14 };
+
+        function pad(n) { return n < 10 ? '0' + n : '' + n }
+        function nowTime() { const d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()) }
+        function code() {
+            const a = 'ЛУНАСОВВОСКЗВЕЗ';
+            let c = ''; for (let i = 0; i < 3; i++)c += a[Math.floor(Math.random() * a.length)];
+            return 'PK-' + c + '-' + Math.floor(1000 + Math.random() * 9000);
+        }
+
+        const sendBtn = document.getElementById('sendBtn');
+        sendBtn.addEventListener('click', () => {
+            if (!chosenSpell) {
+                recLine.textContent = '⚠ Сначала выберите, что у вас случилось.';
+                recLine.style.color = 'var(--danger)';
+                document.getElementById('situChips').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            recLine.style.color = 'var(--aurora)';
+
+            const s = SPELLS[chosenSpell];
+            const addrVal = document.getElementById('addr').value.trim() || 'Улица Тумана, 12';
+            const price = BASE[s.tier] + urgency.add;
+
+            document.getElementById('rSpell').textContent = s.name;
+            document.getElementById('rCode').textContent = code();
+            document.getElementById('rSitu').textContent = s.situ;
+            document.getElementById('rTier').textContent = s.tierLabel;
+            document.getElementById('rUrg').textContent = urgency.label + ' · ' + urgency.eta;
+            document.getElementById('rAddr').textContent = addrVal;
+            document.getElementById('rPrice').textContent = price + ' лунных монет';
+            document.getElementById('t0').textContent = 'сегодня в ' + nowTime();
+
+            document.getElementById('receiptEmpty').classList.add('hidden');
+            document.getElementById('receiptFilled').classList.remove('hidden');
+
+            // animate tracking
+            const steps = document.querySelectorAll('#track .step-t');
+            steps.forEach(st => st.classList.remove('on'));
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduce) {
+                steps.forEach(st => st.classList.add('on'));
+            } else {
+                steps.forEach((st, i) => setTimeout(() => st.classList.add('on'), 350 * (i + 1)));
+            }
+
+            sendBtn.textContent = 'Сова вылетела ✦ оформить ещё';
+            document.getElementById('receipt').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    </script>
+</body>
+
+</html>
